@@ -13,12 +13,14 @@
     ordinary Web APIs. See rule "Offscreen documents have NO access to
     most chrome.* APIs" in the chrome-extensions skill.
 
-    vendor/tesseract/tesseract.min.js must be a LOCAL copy you add
-    yourself — see vendor/tesseract/README.md for exactly how. It must
-    NOT be loaded from a CDN: the Chrome Web Store does not allow
-    extensions to fetch and execute remote code.
+    offscreen.js here is a BUILT file (bundled by esbuild from
+    offscreen.src.js via `npm run build`) — it's the one thing in this
+    extension that isn't hand-written directly, because it needs to pull
+    in the ppu-paddle-ocr/onnxruntime-web npm packages, which browsers
+    can't resolve without a bundler. Don't hand-edit offscreen.js; edit
+    offscreen.src.js and rebuild. It's loaded as a module because the
+    build output is ESM.
   -->
-  <script src="../vendor/tesseract/tesseract.min.js"></script>
-  <script src="offscreen.js"></script>
+  <script type="module" src="offscreen.js"></script>
 </body>
 </html>

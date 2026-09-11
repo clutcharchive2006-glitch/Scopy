@@ -105,14 +105,17 @@ English
 
 | Version | Date | Changes | Status |
 |---------|------|---------|--------|
-| 0.1.0 | 2026-09-11 | Initial build: copy-unlock content script, drag-select snip tool, on-device OCR pipeline (Tesseract.js not yet bundled — see vendor/tesseract/README.md), options page. | Draft |
+| 0.2.0 | 2026-09-11 | Swapped OCR engine from Tesseract.js to PaddleOCR (via ppu-paddle-ocr + onnxruntime-web) for better real-world accuracy and a smaller bundle. Added a build step (esbuild) since the OCR engine needs npm packages bundled. | Draft |
+| 0.1.0 | 2026-09-11 | Initial build: copy-unlock content script, drag-select snip tool, on-device OCR pipeline (Tesseract.js), options page. | Draft |
 
 ## Review Notes
 
 ### Known Issues / Limitations
-- Tesseract.js is not bundled yet — `vendor/tesseract/` is empty except for setup
-  instructions. The snip tool will show an error until those files are added locally
-  (requires normal internet/npm access, unavailable in the sandbox this was built in).
+- The OCR result's text extraction (`extractText()` in `offscreen.src.js`) handles two
+  possible result shapes from `ppu-paddle-ocr` defensively, since its exact output shape
+  with `{flatten:true}` wasn't independently confirmed against the library's source —
+  worth a real test pass to confirm which shape it actually returns and simplify that
+  function once known.
 - Copy-unlock only runs in the page's top frame (`all_frames: false`), so it won't reach
   text inside an `<iframe>` yet. The OCR snip tool works regardless, since it works on
   pixels, not the DOM.
@@ -122,6 +125,8 @@ English
   Web Store review question and a candidate for a v0.2 fix if it comes up in testing.
 - Icons are placeholder art (a plain "S" mark) — replace with real branding before
   submitting.
+- Ships PaddleOCR's model weights (Apache 2.0, from PaddlePaddle/PaddleOCR) — add a
+  credit/NOTICE before publishing; see `vendor/paddleocr/README.md`.
 
 ### Rejection History
 (none yet)
