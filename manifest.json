@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "SnipCopy — Copy Text From Any Page",
-  "version": "0.1.0",
+  "name": "Scopy — Copy Text From Any Page",
+  "version": "0.2.0",
   "description": "Copy text even from pages that block it. Automatically restores selection/copying, plus an on-device text-snip tool for text that isn't real selectable text.",
   "icons": {
     "16": "icons/icon-16.png",
